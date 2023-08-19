@@ -8,6 +8,7 @@ Subpackages
    :maxdepth: 4
 
    app.api
+   app.database
    app.utils
 
 Module contents
