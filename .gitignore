@@ -16,4 +16,4 @@ docker-compose.yml
 *.swp
 
 # Environment variables
-.env/
+.env
