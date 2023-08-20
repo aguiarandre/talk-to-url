@@ -1,12 +1,17 @@
 from flask import Blueprint, request, jsonify
-from app.utils.content_extraction import indexed_urls
 import openai
 from dotenv import load_dotenv
 import os
+from .index_url import db
+from llama_cpp import Llama
+
+LLM = Llama(
+    model_path="D:/Users/andreaguiar/llm/llama-2-7b-chat.ggmlv3.q2_K.bin", n_ctx=4096
+)
 
 load_dotenv()
 
-openai.api_key = os.environ.get("OPENAI_API_KEY")
+# openai.api_key = os.environ.get("OPENAI_API_KEY")
 
 ask_question_bp = Blueprint("ask", __name__)
 
@@ -18,20 +23,27 @@ def ask_question():
     """
     data = request.json
     website_url = data.get("url")
-    prompt = data.get("prompt")
+    question = data.get("question")
 
-    if website_url not in indexed_urls:
+    content = db.get_url(website_url)
+
+    if website_url not in db.list_urls():
         return jsonify({"error": f"URL {website_url} has not been indexed."})
+
+    prompt = f"Given the following content: '{content}', {question}"
 
     conversation = [
         {"role": "system", "content": "You are a helpful assistant."},
-        {"role": "user", "content": f"{prompt} within {website_url}."},
+        {"role": "user", "content": f"{prompt}"},
     ]
+    output = LLM(prompt)
 
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo", messages=conversation
-    )
+    # display the response
+    print(output["choices"][0]["text"])
+    # response = openai.ChatCompletion.create(
+    #     model="gpt-3.5-turbo", messages=conversation
+    # )
 
-    reply = response.choices[0].message["content"]
+    # reply = response.choices[0].message["content"]
 
-    return jsonify({"response": reply})
+    return jsonify({"response": output["choices"][0]["text"]})

@@ -1,5 +1,3 @@
-# Dictionary to store indexed URLs and their content
-indexed_urls = {}
 import requests
 from bs4 import BeautifulSoup
 
@@ -12,5 +10,7 @@ class WebsiteCrawler:
         self,
     ):
         response = requests.get(self.url)
-        data = response.text
-        return data
+
+        soup = BeautifulSoup(response.content)
+        content = soup.get_text()
+        return content

@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from app.utils.content_extraction import WebsiteCrawler, indexed_urls
+from app.utils.content_extraction import WebsiteCrawler
 from app.database.factory import DatabaseFactory, DatabaseType
 
 index_url_bp = Blueprint("index_url", __name__)

@@ -4,6 +4,7 @@ from abc import ABC, abstractmethod
 class Database(ABC):
     @abstractmethod
     def add_url(self, url, content):
+        """Add URL"""
         pass
 
     @abstractmethod
