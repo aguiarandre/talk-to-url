@@ -1,5 +1,5 @@
-config module
-=============
+Config
+======
 
 .. automodule:: config
    :members:

@@ -1,19 +1,16 @@
-app.crawler package
+Crawler
 =======================
 
-Submodules
-----------
-
-app.crawler.base module
----------------------------
+Crawler Interface
+-----------------
 
 .. automodule:: app.crawler.base
    :members:
    :undoc-members:
    :show-inheritance:
 
-app.crawler.static module
------------------------------
+Static Crawler
+--------------
 
 .. automodule:: app.crawler.static
    :members:

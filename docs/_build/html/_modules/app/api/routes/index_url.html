@@ -86,9 +86,9 @@
             
                 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../app.html">app package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../config.html">config module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../run.html">run module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../app.html">Talk to a website</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../config.html">Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../run.html">Flask config</a></li>
 </ul>
 
             
@@ -160,13 +160,20 @@
 <span class="kn">from</span> <span class="nn">app.crawler.factory</span> <span class="kn">import</span> <span class="n">CrawlerFactory</span><span class="p">,</span> <span class="n">CrawlerType</span>
 <span class="kn">import</span> <span class="nn">multiprocessing</span>
 <span class="kn">from</span> <span class="nn">llama_cpp</span> <span class="kn">import</span> <span class="n">Llama</span>
+<span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">config</span> <span class="kn">import</span> <span class="n">Config</span>
+<span class="kn">from</span> <span class="nn">InstructorEmbedding</span> <span class="kn">import</span> <span class="n">INSTRUCTOR</span>
 
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 <span class="n">index_url_bp</span> <span class="o">=</span> <span class="n">Blueprint</span><span class="p">(</span><span class="s2">&quot;index_url&quot;</span><span class="p">,</span> <span class="vm">__name__</span><span class="p">)</span>
 
+<span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Initializing Database&#39;</span><span class="p">)</span>
 <span class="n">db</span> <span class="o">=</span> <span class="n">DatabaseFactory</span><span class="o">.</span><span class="n">create_database</span><span class="p">(</span><span class="n">DatabaseType</span><span class="o">.</span><span class="n">IN_MEMORY</span><span class="p">)</span>
 
+<span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Initializing Instructor model for embeddings&#39;</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">INSTRUCTOR</span><span class="p">(</span><span class="n">Config</span><span class="o">.</span><span class="n">INSTRUCTOR_MODEL</span><span class="p">)</span>
 
+<span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Initializing LLM at </span><span class="si">{</span><span class="n">Config</span><span class="o">.</span><span class="n">MODEL_PATH</span><span class="si">}</span><span class="s1"> with </span><span class="si">{</span><span class="n">Config</span><span class="o">.</span><span class="n">MODEL_CTX_SIZE</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 <span class="n">llm</span> <span class="o">=</span> <span class="n">Llama</span><span class="p">(</span>
     <span class="n">model_path</span><span class="o">=</span><span class="n">Config</span><span class="o">.</span><span class="n">MODEL_PATH</span><span class="p">,</span>
         <span class="n">n_ctx</span><span class="o">=</span><span class="n">Config</span><span class="o">.</span><span class="n">MODEL_CTX_SIZE</span><span class="p">,</span>
@@ -197,36 +204,46 @@
     <span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">json</span>
 
     <span class="n">website_url</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;url&quot;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Indexing </span><span class="si">{</span><span class="n">website_url</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
     <span class="c1"># Extract and process content</span>
     <span class="n">crawler</span> <span class="o">=</span> <span class="n">CrawlerFactory</span><span class="o">.</span><span class="n">create_crawler</span><span class="p">(</span><span class="n">CrawlerType</span><span class="o">.</span><span class="n">STATIC</span><span class="p">,</span> <span class="n">website_url</span><span class="p">)</span>
     <span class="n">content</span> <span class="o">=</span> <span class="n">crawler</span><span class="o">.</span><span class="n">extract_content</span><span class="p">()</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">website_url</span><span class="si">}</span><span class="s1"> content extracted: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="si">}</span><span class="s1"> words&#39;</span><span class="p">)</span>
 
     <span class="c1"># Store contents of the indexed URLs to database</span>
 
     <span class="n">db</span><span class="o">.</span><span class="n">add_url</span><span class="p">(</span><span class="n">website_url</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">website_url</span><span class="si">}</span><span class="s1"> added to DB&#39;</span><span class="p">)</span>
 
     <span class="c1"># break content into chunks of N tokens tops</span>
     <span class="n">tokens</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">content</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">website_url</span><span class="si">}</span><span class="s1"> has </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
     <span class="n">chunks</span> <span class="o">=</span> <span class="n">split_into_max_tokens</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">max_chunk_size</span><span class="o">=</span><span class="n">Config</span><span class="o">.</span><span class="n">MAX_TOKENS</span><span class="p">,</span> <span class="n">intersection</span><span class="o">=</span><span class="n">Config</span><span class="o">.</span><span class="n">CHUNK_INTERSECTION</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">website_url</span><span class="si">}</span><span class="s1"> was separated into </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">chunks</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
     <span class="n">chunked_content</span> <span class="o">=</span> <span class="n">content</span>
 
     <span class="k">with</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Pool</span><span class="p">(</span><span class="n">processes</span><span class="o">=</span><span class="n">Config</span><span class="o">.</span><span class="n">N_PROCESSES</span><span class="p">)</span> <span class="k">as</span> <span class="n">pool</span><span class="p">:</span>
-        <span class="n">response</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">get_embeddings</span><span class="p">,</span> <span class="n">chunks</span><span class="p">)</span>
+        <span class="n">responses</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">get_embeddings</span><span class="p">,</span> <span class="n">chunks</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">t</span><span class="p">,</span> <span class="n">embed</span> <span class="ow">in</span> <span class="n">responses</span><span class="p">:</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">add_embeddings</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">embed</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">website_url</span><span class="si">}</span><span class="s1"> has embeddings stored in DB with </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">embedding_map</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s1"> keys&#39;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span>
         <span class="p">{</span>
-            <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;URL </span><span class="si">{</span><span class="n">website_url</span><span class="si">}</span><span class="s2"> has been indexed with </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="si">}</span><span class="s2"> letters.&quot;</span>
+            <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;URL </span><span class="si">{</span><span class="n">website_url</span><span class="si">}</span><span class="s2"> has been indexed. </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="si">}</span><span class="s2"> letters was divided into </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">embedding_map</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2"> chunks.&quot;</span>
         <span class="p">}</span>
     <span class="p">)</span></div>
 
 <div class="viewcode-block" id="get_embeddings"><a class="viewcode-back" href="../../../../app.api.routes.html#app.api.routes.index_url.get_embeddings">[docs]</a><span class="k">def</span> <span class="nf">get_embeddings</span><span class="p">(</span><span class="n">chunk</span><span class="p">):</span>
     <span class="n">text</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">detokenize</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
-    <span class="n">embedding</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">create_embedding</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">text</span><span class="p">))[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;embedding&#39;</span><span class="p">]</span>
-    <span class="n">db</span><span class="o">.</span><span class="n">add_embeddings</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">embedding</span><span class="p">)</span>
+    <span class="n">instruction</span> <span class="o">=</span> <span class="s2">&quot;Represent the webpage text:&quot;</span>
+    <span class="n">embedding</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">encode</span><span class="p">([[</span><span class="n">instruction</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="n">text</span><span class="p">)]])</span>
 
-    <span class="k">return</span></div>
+    <span class="k">return</span> <span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">embedding</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="split_into_max_tokens"><a class="viewcode-back" href="../../../../app.api.routes.html#app.api.routes.index_url.split_into_max_tokens">[docs]</a><span class="k">def</span> <span class="nf">split_into_max_tokens</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">max_chunk_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span> <span class="n">intersection</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
     <span class="n">chunks</span> <span class="o">=</span> <span class="p">[]</span>

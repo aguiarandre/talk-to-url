@@ -7,7 +7,7 @@ app = Flask(__name__)
 if __name__ == "__main__":
     app.register_blueprint(index_url_bp, url_prefix="/v1")
     app.register_blueprint(ask_question_bp, url_prefix="/v1")
-    app.run(host="0.0.0.0", port=4000)
+    app.run(host="0.0.0.0", port=4000, debug=True)
 
 
 # docker run -p 4000:80 --mount type=bind,source="$(pwd)"/app,target=/llm findly-api

@@ -86,9 +86,10 @@
             
                 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../app.html">app package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../config.html">config module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../run.html">run module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app.html">Talk to a website API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../config.html">Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../run.html">Flask config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts.html">Concepts</a></li>
 </ul>
 
             
@@ -148,14 +149,34 @@
            <div itemprop="articleBody">
             
   <h1>Source code for config</h1><div class="highlight"><pre>
-<div class="viewcode-block" id="Config"><a class="viewcode-back" href="../config.html#config.Config">[docs]</a><span></span><span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
-    <span class="n">N_PROCESSES</span> <span class="o">=</span> <span class="mi">8</span>
+<span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">logging.handlers</span> <span class="kn">import</span> <span class="n">RotatingFileHandler</span>
+<span class="kn">import</span> <span class="nn">os</span>
 
-    <span class="n">MAX_TOKENS</span> <span class="o">=</span> <span class="mi">2048</span>
+<div class="viewcode-block" id="Config"><a class="viewcode-back" href="../config.html#config.Config">[docs]</a><span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
+    <span class="n">N_PROCESSES</span> <span class="o">=</span> <span class="mi">2</span>
+
+    <span class="c1"># CONTEXT WINDOW LENGTH</span>
+    <span class="n">MAX_TOKENS</span> <span class="o">=</span> <span class="mi">512</span>
     <span class="n">CHUNK_INTERSECTION</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">CHUNKS_STACKED</span> <span class="o">=</span> <span class="mi">6</span>
 
+    <span class="c1"># LLAMA CONFIG</span>
+    <span class="n">APP_PATH</span> <span class="o">=</span> <span class="s2">&quot;/Users/andreaguiar/Desktop/usr/dev/llm/talk-to-url/&quot;</span>
     <span class="n">MODEL_PATH</span> <span class="o">=</span> <span class="s2">&quot;/Users/andreaguiar/Desktop/usr/dev/llm/talk-to-url/data/llama-2-7b-chat.ggmlv3.q2_K.bin&quot;</span>
-    <span class="n">MODEL_CTX_SIZE</span> <span class="o">=</span> <span class="mi">4096</span></div>
+
+    <span class="n">MODEL_CTX_SIZE</span> <span class="o">=</span> <span class="mi">4096</span>
+
+    <span class="c1"># EMBEDDINGS</span>
+    <span class="n">INSTRUCTOR_MODEL</span> <span class="o">=</span> <span class="s1">&#39;hkunlp/instructor-xl&#39;</span></div>
+
+<span class="c1"># logger config</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> - </span><span class="si">%(name)s</span><span class="s1"> - </span><span class="si">%(levelname)s</span><span class="s1"> - </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">file_handler</span> <span class="o">=</span> <span class="n">RotatingFileHandler</span><span class="p">(</span><span class="s1">&#39;/Users/andreaguiar/Desktop/usr/dev/llm/talk-to-url/log/app.log&#39;</span><span class="p">,</span> <span class="n">maxBytes</span><span class="o">=</span><span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">,</span> <span class="n">backupCount</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">file_handler</span><span class="p">)</span>
 </pre></div>
 
            </div>

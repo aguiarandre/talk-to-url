@@ -1,16 +1,8 @@
-app.api package
-===============
+API Package
+===========
 
-Module contents
----------------
-
-.. automodule:: app.api
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Submodules
-----------
+API Endpoints
+-------------
 
 .. toctree::
    :maxdepth: 4

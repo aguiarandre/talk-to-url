@@ -10,13 +10,20 @@ from app.database.factory import DatabaseFactory, DatabaseType
 from app.crawler.factory import CrawlerFactory, CrawlerType
 import multiprocessing
 from llama_cpp import Llama
+import logging
 from config import Config
+from InstructorEmbedding import INSTRUCTOR
 
+logger = logging.getLogger(__name__)
 index_url_bp = Blueprint("index_url", __name__)
 
+logger.info(f'Initializing Database')
 db = DatabaseFactory.create_database(DatabaseType.IN_MEMORY)
 
+logger.info(f'Initializing Instructor model for embeddings')
+model = INSTRUCTOR(Config.INSTRUCTOR_MODEL)
 
+logger.info(f'Initializing LLM at {Config.MODEL_PATH} with {Config.MODEL_CTX_SIZE}')
 llm = Llama(
     model_path=Config.MODEL_PATH,
         n_ctx=Config.MODEL_CTX_SIZE,
@@ -47,36 +54,46 @@ def index_url():
     data = request.json
 
     website_url = data.get("url")
+    logger.info(f'Indexing {website_url}')
 
     # Extract and process content
     crawler = CrawlerFactory.create_crawler(CrawlerType.STATIC, website_url)
     content = crawler.extract_content()
+    logger.info(f'{website_url} content extracted: {len(content)} words')
 
     # Store contents of the indexed URLs to database
 
     db.add_url(website_url, content)
+    logger.info(f'{website_url} added to DB')
 
     # break content into chunks of N tokens tops
     tokens = llm.tokenize(content.encode('utf-8'))
+    logger.info(f'{website_url} has {len(tokens)}')
+
     chunks = split_into_max_tokens(tokens, max_chunk_size=Config.MAX_TOKENS, intersection=Config.CHUNK_INTERSECTION)
+    logger.info(f'{website_url} was separated into {len(chunks)}')
 
     chunked_content = content
 
     with multiprocessing.Pool(processes=Config.N_PROCESSES) as pool:
-        response = pool.map(get_embeddings, chunks)
+        responses = pool.map(get_embeddings, chunks)
+
+    for t, embed in responses:
+        db.add_embeddings(t, embed)
+    logger.info(f'{website_url} has embeddings stored in DB with {len(db.embedding_map.keys())} keys')
 
     return jsonify(
         {
-            "message": f"URL {website_url} has been indexed with {len(content)} letters."
+            "message": f"URL {website_url} has been indexed. {len(content)} letters was divided into {len(db.embedding_map.keys())} chunks."
         }
     )
 
 def get_embeddings(chunk):
     text = llm.detokenize(chunk)
-    embedding = llm.create_embedding(str(text))['data'][0]['embedding']
-    db.add_embeddings(text, embedding)
+    instruction = "Represent the webpage text:"
+    embedding = model.encode([[instruction,str(text)]])
 
-    return
+    return (text, embedding)
 
 def split_into_max_tokens(tokens, max_chunk_size=1024, intersection=0):
     chunks = []

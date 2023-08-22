@@ -9,7 +9,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>app.database package &mdash; llm  documentation</title>
+  <title>Database &mdash; llm  documentation</title>
   
 
   
@@ -39,9 +39,9 @@
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="llm  documentation" href="index.html"/>
-        <link rel="up" title="app package" href="app.html"/>
-        <link rel="next" title="config module" href="config.html"/>
-        <link rel="prev" title="app.api.routes package" href="app.api.routes.html"/> 
+        <link rel="up" title="Talk to a website" href="app.html"/>
+        <link rel="next" title="Config" href="config.html"/>
+        <link rel="prev" title="Crawler" href="app.crawler.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -89,25 +89,23 @@
             
                 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="app.html">app package</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="app.html">Talk to a website</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="app.html#subpackages">Subpackages</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="app.api.html">app.api package</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">app.database package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#module-app.database.base">app.database.base module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#module-app.database.disk">app.database.disk module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#module-app.database.factory">app.database.factory module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#module-app.database.in_memory">app.database.in_memory module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#module-app.database">Module contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="app.api.html">API Package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="app.crawler.html">Crawler</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Database</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#module-app.database.base">Database Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-app.database.in_memory">In Memory Implementation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-app.database.disk">Disk Implementation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-app.database.factory">Database Factory</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="app.html#module-app">Module contents</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="config.html">config module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="run.html">run module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run.html">Flask config</a></li>
 </ul>
 
             
@@ -149,9 +147,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-          <li><a href="app.html">app package</a> &raquo;</li>
+          <li><a href="app.html">Talk to a website</a> &raquo;</li>
         
-      <li>app.database package</li>
+      <li>Database</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -168,13 +166,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="app-database-package">
-<h1>app.database package<a class="headerlink" href="#app-database-package" title="Permalink to this heading">¶</a></h1>
-<section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">¶</a></h2>
-</section>
+  <section id="database">
+<h1>Database<a class="headerlink" href="#database" title="Permalink to this heading">¶</a></h1>
 <section id="module-app.database.base">
-<span id="app-database-base-module"></span><h2>app.database.base module<a class="headerlink" href="#module-app.database.base" title="Permalink to this heading">¶</a></h2>
+<span id="database-interface"></span><h2>Database Interface<a class="headerlink" href="#module-app.database.base" title="Permalink to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="app.database.base.Database">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.database.base.</span></span><span class="sig-name descname"><span class="pre">Database</span></span><a class="reference internal" href="_modules/app/database/base.html#Database"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.database.base.Database" title="Permalink to this definition">¶</a></dt>
@@ -212,8 +207,49 @@
 </dd></dl>
 
 </section>
+<section id="module-app.database.in_memory">
+<span id="in-memory-implementation"></span><h2>In Memory Implementation<a class="headerlink" href="#module-app.database.in_memory" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="app.database.in_memory.InMemoryDB">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.database.in_memory.</span></span><span class="sig-name descname"><span class="pre">InMemoryDB</span></span><a class="reference internal" href="_modules/app/database/in_memory.html#InMemoryDB"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.database.in_memory.InMemoryDB" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#app.database.base.Database" title="app.database.base.Database"><code class="xref py py-class docutils literal notranslate"><span class="pre">Database</span></code></a></p>
+<p>InMemoryDB is a simple implementation of a dictionary used
+to store the contents of the website URLs</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="app.database.in_memory.InMemoryDB.add_embeddings">
+<span class="sig-name descname"><span class="pre">add_embeddings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embedding</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/database/in_memory.html#InMemoryDB.add_embeddings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.database.in_memory.InMemoryDB.add_embeddings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add text along with its associated embedding vectors</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.database.in_memory.InMemoryDB.add_url">
+<span class="sig-name descname"><span class="pre">add_url</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/database/in_memory.html#InMemoryDB.add_url"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.database.in_memory.InMemoryDB.add_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add URL</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.database.in_memory.InMemoryDB.get_embeddings">
+<span class="sig-name descname"><span class="pre">get_embeddings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/database/in_memory.html#InMemoryDB.get_embeddings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.database.in_memory.InMemoryDB.get_embeddings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve the embedding for a given text</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.database.in_memory.InMemoryDB.get_url">
+<span class="sig-name descname"><span class="pre">get_url</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/database/in_memory.html#InMemoryDB.get_url"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.database.in_memory.InMemoryDB.get_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given the URL, return its content</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.database.in_memory.InMemoryDB.list_urls">
+<span class="sig-name descname"><span class="pre">list_urls</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/database/in_memory.html#InMemoryDB.list_urls"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.database.in_memory.InMemoryDB.list_urls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list the indexed URLs</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="module-app.database.disk">
-<span id="app-database-disk-module"></span><h2>app.database.disk module<a class="headerlink" href="#module-app.database.disk" title="Permalink to this heading">¶</a></h2>
+<span id="disk-implementation"></span><h2>Disk Implementation<a class="headerlink" href="#module-app.database.disk" title="Permalink to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="app.database.disk.DiskDB">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.database.disk.</span></span><span class="sig-name descname"><span class="pre">DiskDB</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/database/disk.html#DiskDB"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.database.disk.DiskDB" title="Permalink to this definition">¶</a></dt>
@@ -222,7 +258,7 @@
 
 </section>
 <section id="module-app.database.factory">
-<span id="app-database-factory-module"></span><h2>app.database.factory module<a class="headerlink" href="#module-app.database.factory" title="Permalink to this heading">¶</a></h2>
+<span id="database-factory"></span><h2>Database Factory<a class="headerlink" href="#module-app.database.factory" title="Permalink to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="app.database.factory.DatabaseFactory">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.database.factory.</span></span><span class="sig-name descname"><span class="pre">DatabaseFactory</span></span><a class="reference internal" href="_modules/app/database/factory.html#DatabaseFactory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.database.factory.DatabaseFactory" title="Permalink to this definition">¶</a></dt>
@@ -257,49 +293,6 @@
 </dd></dl>
 
 </section>
-<section id="module-app.database.in_memory">
-<span id="app-database-in-memory-module"></span><h2>app.database.in_memory module<a class="headerlink" href="#module-app.database.in_memory" title="Permalink to this heading">¶</a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="app.database.in_memory.InMemoryDB">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.database.in_memory.</span></span><span class="sig-name descname"><span class="pre">InMemoryDB</span></span><a class="reference internal" href="_modules/app/database/in_memory.html#InMemoryDB"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.database.in_memory.InMemoryDB" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#app.database.base.Database" title="app.database.base.Database"><code class="xref py py-class docutils literal notranslate"><span class="pre">Database</span></code></a></p>
-<p>InMemoryDB is a simple implementation of a dictionary</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="app.database.in_memory.InMemoryDB.add_embeddings">
-<span class="sig-name descname"><span class="pre">add_embeddings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embedding</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/database/in_memory.html#InMemoryDB.add_embeddings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.database.in_memory.InMemoryDB.add_embeddings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add text along with its associated embedding vectors</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="app.database.in_memory.InMemoryDB.add_url">
-<span class="sig-name descname"><span class="pre">add_url</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/database/in_memory.html#InMemoryDB.add_url"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.database.in_memory.InMemoryDB.add_url" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add URL</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="app.database.in_memory.InMemoryDB.get_embeddings">
-<span class="sig-name descname"><span class="pre">get_embeddings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/database/in_memory.html#InMemoryDB.get_embeddings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.database.in_memory.InMemoryDB.get_embeddings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Retrieve the embedding for a given text</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="app.database.in_memory.InMemoryDB.get_url">
-<span class="sig-name descname"><span class="pre">get_url</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/database/in_memory.html#InMemoryDB.get_url"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.database.in_memory.InMemoryDB.get_url" title="Permalink to this definition">¶</a></dt>
-<dd><p>Given the URL, return its content</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="app.database.in_memory.InMemoryDB.list_urls">
-<span class="sig-name descname"><span class="pre">list_urls</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/database/in_memory.html#InMemoryDB.list_urls"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.database.in_memory.InMemoryDB.list_urls" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a list the indexed URLs</p>
-</dd></dl>
-
-</dd></dl>
-
-</section>
-<section id="module-app.database">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-app.database" title="Permalink to this heading">¶</a></h2>
-</section>
 </section>
 
 
@@ -309,10 +302,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="config.html" class="btn btn-neutral float-right" title="config module" accesskey="n">Next →</a>
+        <a href="config.html" class="btn btn-neutral float-right" title="Config" accesskey="n">Next →</a>
       
       
-        <a href="app.api.routes.html" class="btn btn-neutral" title="app.api.routes package" accesskey="p">← Previous</a>
+        <a href="app.crawler.html" class="btn btn-neutral" title="Crawler" accesskey="p">← Previous</a>
       
     </div>
   

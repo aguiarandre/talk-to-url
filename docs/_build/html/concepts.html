@@ -9,7 +9,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>app.api.crawler package &mdash; llm  documentation</title>
+  <title>Concepts &mdash; llm  documentation</title>
   
 
   
@@ -39,9 +39,8 @@
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="llm  documentation" href="index.html"/>
-        <link rel="up" title="app.api package" href="app.api.html"/>
-        <link rel="next" title="app.api.routes package" href="app.api.routes.html"/>
-        <link rel="prev" title="app.api package" href="app.api.html"/> 
+        <link rel="next" title="Crawler" href="concepts.crawler.html"/>
+        <link rel="prev" title="Flask config" href="run.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -89,22 +88,18 @@
             
                 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="app.html">app package</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="app.html#subpackages">Subpackages</a><ul class="current">
-<li class="toctree-l3 current"><a class="reference internal" href="app.api.html">app.api package</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="app.api.html#module-app.api">Module contents</a></li>
-<li class="toctree-l4 current"><a class="reference internal" href="app.api.html#submodules">Submodules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="app.html">Talk to a website API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run.html">Flask config</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Concepts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="concepts.crawler.html">Crawler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concepts.database.html">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concepts.llm.html">LLAMA 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concepts.context_length.html">Context Length</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concepts.embeddings.html">Embeddings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concepts.nearest_match.html">Approach to handle context length issues</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="app.database.html">app.database package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="app.utils.html">app.utils package</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="app.html#module-app">Module contents</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="config.html">config module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="run.html">run module</a></li>
 </ul>
 
             
@@ -146,17 +141,13 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-          <li><a href="app.html">app package</a> &raquo;</li>
-        
-          <li><a href="app.api.html">app.api package</a> &raquo;</li>
-        
-      <li>app.api.crawler package</li>
+      <li>Concepts</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/app.api.crawler.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/concepts.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -167,17 +158,40 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="app-api-crawler-package">
-<h1>app.api.crawler package<a class="headerlink" href="#app-api-crawler-package" title="Permalink to this heading">¶</a></h1>
-<section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">¶</a></h2>
-</section>
-<section id="app-api-crawler-base-module">
-<h2>app.api.crawler.base module<a class="headerlink" href="#app-api-crawler-base-module" title="Permalink to this heading">¶</a></h2>
-</section>
-<section id="app-api-crawler-static-module">
-<h2>app.api.crawler.static module<a class="headerlink" href="#app-api-crawler-static-module" title="Permalink to this heading">¶</a></h2>
-</section>
+  <section id="concepts">
+<h1>Concepts<a class="headerlink" href="#concepts" title="Permalink to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="concepts.crawler.html">Crawler</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="concepts.crawler.html#crawler-depth">Crawler Depth</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="concepts.database.html">Database</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="concepts.database.html#interface">Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="concepts.llm.html">LLAMA 2</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="concepts.llm.html#todo">TODO</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="concepts.context_length.html">Context Length</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="concepts.context_length.html#todo">TODO</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="concepts.embeddings.html">Embeddings</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="concepts.embeddings.html#todo">TODO</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="concepts.nearest_match.html">Approach to handle context length issues</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="concepts.nearest_match.html#intersection">Intersection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concepts.nearest_match.html#embeddings">Embeddings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concepts.nearest_match.html#cosine-similarity">Cosine Similarity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concepts.nearest_match.html#heapq">Heapq</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concepts.nearest_match.html#possible-alternatives">Possible alternatives</a></li>
+</ul>
+</li>
+</ul>
+</div>
 </section>
 
 
@@ -187,10 +201,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="app.api.routes.html" class="btn btn-neutral float-right" title="app.api.routes package" accesskey="n">Next →</a>
+        <a href="concepts.crawler.html" class="btn btn-neutral float-right" title="Crawler" accesskey="n">Next →</a>
       
       
-        <a href="app.api.html" class="btn btn-neutral" title="app.api package" accesskey="p">← Previous</a>
+        <a href="run.html" class="btn btn-neutral" title="Flask config" accesskey="p">← Previous</a>
       
     </div>
   

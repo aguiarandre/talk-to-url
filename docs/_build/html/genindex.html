@@ -85,9 +85,10 @@
             
                 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="app.html">app package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="config.html">config module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="run.html">run module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="app.html">Talk to a website API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run.html">Flask config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="concepts.html">Concepts</a></li>
 </ul>
 
             
@@ -177,20 +178,6 @@
 </li>
       </ul></li>
       <li>
-    app
-
-      <ul>
-        <li><a href="app.html#module-app">module</a>
-</li>
-      </ul></li>
-      <li>
-    app.api
-
-      <ul>
-        <li><a href="app.api.html#module-app.api">module</a>
-</li>
-      </ul></li>
-      <li>
     app.api.routes.ask
 
       <ul>
@@ -211,8 +198,6 @@
         <li><a href="app.crawler.html#module-app.crawler.base">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     app.crawler.static
 
@@ -220,13 +205,8 @@
         <li><a href="app.crawler.html#module-app.crawler.static">module</a>
 </li>
       </ul></li>
-      <li>
-    app.database
-
-      <ul>
-        <li><a href="app.database.html#module-app.database">module</a>
-</li>
-      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     app.database.base
 
@@ -255,6 +235,8 @@
         <li><a href="app.database.html#module-app.database.in_memory">module</a>
 </li>
       </ul></li>
+      <li><a href="config.html#config.Config.APP_PATH">APP_PATH (config.Config attribute)</a>
+</li>
       <li><a href="app.api.routes.html#app.api.routes.ask.ask_question">ask_question() (in module app.api.routes.ask)</a>
 </li>
   </ul></td>
@@ -264,6 +246,8 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="config.html#config.Config.CHUNK_INTERSECTION">CHUNK_INTERSECTION (config.Config attribute)</a>
+</li>
+      <li><a href="config.html#config.Config.CHUNKS_STACKED">CHUNKS_STACKED (config.Config attribute)</a>
 </li>
       <li>
     config
@@ -320,6 +304,8 @@
 <h2 id="G">G</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="app.api.routes.html#app.api.routes.ask.generate_text_response">generate_text_response() (in module app.api.routes.ask)</a>
+</li>
       <li><a href="app.database.html#app.database.base.Database.get_embeddings">get_embeddings() (app.database.base.Database method)</a>
 
       <ul>
@@ -344,11 +330,13 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="app.database.html#app.database.factory.DatabaseType.IN_MEMORY">IN_MEMORY (app.database.factory.DatabaseType attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="app.api.routes.html#app.api.routes.index_url.index_url">index_url() (in module app.api.routes.index_url)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="app.database.html#app.database.in_memory.InMemoryDB">InMemoryDB (class in app.database.in_memory)</a>
+</li>
+      <li><a href="config.html#config.Config.INSTRUCTOR_MODEL">INSTRUCTOR_MODEL (config.Config attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -378,10 +366,6 @@
     module
 
       <ul>
-        <li><a href="app.html#module-app">app</a>
-</li>
-        <li><a href="app.api.html#module-app.api">app.api</a>
-</li>
         <li><a href="app.api.routes.html#module-app.api.routes.ask">app.api.routes.ask</a>
 </li>
         <li><a href="app.api.routes.html#module-app.api.routes.index_url">app.api.routes.index_url</a>
@@ -389,8 +373,6 @@
         <li><a href="app.crawler.html#module-app.crawler.base">app.crawler.base</a>
 </li>
         <li><a href="app.crawler.html#module-app.crawler.static">app.crawler.static</a>
-</li>
-        <li><a href="app.database.html#module-app.database">app.database</a>
 </li>
         <li><a href="app.database.html#module-app.database.base">app.database.base</a>
 </li>

@@ -1,5 +1,5 @@
-run module
-==========
+Flask config
+============
 
 .. automodule:: run
    :members:

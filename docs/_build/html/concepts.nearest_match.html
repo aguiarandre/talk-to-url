@@ -1,0 +1,287 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Approach to handle context length issues &mdash; llm  documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="llm  documentation" href="index.html"/>
+        <link rel="up" title="Concepts" href="concepts.html"/>
+        <link rel="prev" title="Embeddings" href="concepts.embeddings.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> llm
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="app.html">Talk to a website API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run.html">Flask config</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="concepts.html">Concepts</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="concepts.crawler.html">Crawler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concepts.database.html">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concepts.llm.html">LLAMA 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concepts.context_length.html">Context Length</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concepts.embeddings.html">Embeddings</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Approach to handle context length issues</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#intersection">Intersection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#embeddings">Embeddings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cosine-similarity">Cosine Similarity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#heapq">Heapq</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#possible-alternatives">Possible alternatives</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">llm</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="concepts.html">Concepts</a> &raquo;</li>
+        
+      <li>Approach to handle context length issues</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/concepts.nearest_match.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <section id="approach-to-handle-context-length-issues">
+<h1>Approach to handle context length issues<a class="headerlink" href="#approach-to-handle-context-length-issues" title="Permalink to this heading">¶</a></h1>
+<p>The general idea is: we can’t feed the whole content of the website because there’s a limitation on number of tokens.</p>
+<p>The workaround I thought was:
+- divide the whole content into chunks of size &lt; max_tokens allowed
+- create embeddings for each chunk (store it in the db for later usage)
+- create embeddings for prompt
+- calculate similarity (cosine) between prompt and each chunk
+- select top K closest chunks and stack them together
+- use the stacked chunks as the context input</p>
+<p>Note: It is important to properly handle configurations such that max_tokens for each chunk and number of chunks stacked
+won’t surpass the LLM token limit.</p>
+<p>Note: this is done in the <cite>index_url</cite> (I was initially doing it in <cite>ask</cite> but realised this step may take a lot of time,
+in which case it’s better to do once)</p>
+<img alt="_images/findly-approach.png" src="_images/findly-approach.png" />
+<section id="intersection">
+<h2>Intersection<a class="headerlink" href="#intersection" title="Permalink to this heading">¶</a></h2>
+<p>I’ve added some intersection to each adjacent chunk so as to try to avoid losing important pieces of connected information.</p>
+</section>
+<section id="embeddings">
+<h2>Embeddings<a class="headerlink" href="#embeddings" title="Permalink to this heading">¶</a></h2>
+<p>Initially, I have used LLAMA 2 itself to generate the embeddings of the given chunks,
+however, embeddings were generated on a very impractical rate of no more than 10 token/s.</p>
+<p>I’ve tried to parallelize the computation using <cite>multiprocessing</cite>. However, main bottleneck was not I/O. Probably,
+the next best strategy here would be to fix the installation of llama-cpp-python to make a better usage of apple’s M1 chip.</p>
+<p>The best solution was to look for another transformer. I’ve ended up using Instructor transformer
+(which may guide the embedding space based on an instruction). This ended up</p>
+<p>Here, there’s an opportunity to refactor so as to make the ‘embedder’ (or vectorizer) concept general as well.</p>
+</section>
+<section id="cosine-similarity">
+<h2>Cosine Similarity<a class="headerlink" href="#cosine-similarity" title="Permalink to this heading">¶</a></h2>
+<p>TODO</p>
+</section>
+<section id="heapq">
+<h2>Heapq<a class="headerlink" href="#heapq" title="Permalink to this heading">¶</a></h2>
+<p>A priority queue (max heap) was used to keep track of the chunks with highest cosine similarity.
+The top K chunks were stacked together and used as an input to the LLM.</p>
+</section>
+<section id="possible-alternatives">
+<h2>Possible alternatives<a class="headerlink" href="#possible-alternatives" title="Permalink to this heading">¶</a></h2>
+<p>I have tried
+- directly using the content of the website, obtained ‘max prompt length’
+-  using the chunk with maximum similarity as the context for the question</p>
+<p>I haven’t tried
+- Apply text generation for all chunks together and come up with a confidence score to decide which one to choose</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="concepts.embeddings.html" class="btn btn-neutral" title="Embeddings" accesskey="p">← Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2023, Author.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE: 'true'
+        };
+    </script>
+      <script type="text/javascript" src="_static/documentation_options.js"></script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/sphinx_highlight.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,4 +1,6 @@
 from .base import Crawler
+import requests
+from bs4 import BeautifulSoup
 
 class StaticCrawler(Crawler):
     """
@@ -9,5 +11,5 @@ class StaticCrawler(Crawler):
         self,
     ):
         response = requests.get(self.url)
-        soup = BeautifulSoup(response.content)
+        soup = BeautifulSoup(response.content, features="html.parser")
         return soup.get_text()

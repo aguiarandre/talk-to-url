@@ -1,19 +1,16 @@
-app.api.routes package
-======================
+Routes
+======
 
-Submodules
-----------
-
-app.api.routes.index_url module
--------------------------------
+index_url
+---------
 
 .. automodule:: app.api.routes.index_url
    :members:
    :undoc-members:
    :show-inheritance:
 
-app.api.routes.ask module
--------------------------
+ask
+---
 
 .. automodule:: app.api.routes.ask
    :members:

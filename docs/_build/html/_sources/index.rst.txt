@@ -3,8 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to llm's documentation!
-===============================
+Talk to your Website - Findly Take Home Case
+============================================
 
 .. toctree::
    :maxdepth: 5
@@ -13,6 +13,7 @@ Welcome to llm's documentation!
    app
    config
    run
+   concepts
 
 
 Indices and tables

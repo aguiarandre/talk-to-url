@@ -1,8 +1,5 @@
-app package
-===========
-
-Subpackages
------------
+Talk to a website API
+=====================
 
 .. toctree::
    :maxdepth: 4
@@ -10,11 +7,3 @@ Subpackages
    app.api
    app.crawler
    app.database
-
-Module contents
----------------
-
-.. automodule:: app
-   :members:
-   :undoc-members:
-   :show-inheritance:

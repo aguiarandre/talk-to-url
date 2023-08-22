@@ -9,7 +9,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Welcome to llm’s documentation! &mdash; llm  documentation</title>
+  <title>Talk to your Website - Findly Take Home Case &mdash; llm  documentation</title>
   
 
   
@@ -39,7 +39,7 @@
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="llm  documentation" href="#"/>
-        <link rel="next" title="app package" href="app.html"/> 
+        <link rel="next" title="Talk to a website API" href="app.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -87,9 +87,10 @@
             
                 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="app.html">app package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="config.html">config module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="run.html">run module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="app.html">Talk to a website API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run.html">Flask config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="concepts.html">Concepts</a></li>
 </ul>
 
             
@@ -131,7 +132,7 @@
     
       <li><a href="#">Docs</a> &raquo;</li>
         
-      <li>Welcome to llm’s documentation!</li>
+      <li>Talk to your Website - Findly Take Home Case</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -148,63 +149,90 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="welcome-to-llm-s-documentation">
-<h1>Welcome to llm’s documentation!<a class="headerlink" href="#welcome-to-llm-s-documentation" title="Permalink to this heading">¶</a></h1>
+  <section id="talk-to-your-website-findly-take-home-case">
+<h1>Talk to your Website - Findly Take Home Case<a class="headerlink" href="#talk-to-your-website-findly-take-home-case" title="Permalink to this heading">¶</a></h1>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="app.html">app package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="app.html#subpackages">Subpackages</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="app.api.html">app.api package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="app.api.html#module-app.api">Module contents</a></li>
-<li class="toctree-l4"><a class="reference internal" href="app.api.html#submodules">Submodules</a><ul>
-<li class="toctree-l5"><a class="reference internal" href="app.api.routes.html">app.api.routes package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="app.html">Talk to a website API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="app.api.html">API Package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="app.api.html#api-endpoints">API Endpoints</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="app.api.routes.html">Routes</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="app.api.routes.html#module-app.api.routes.index_url">index_url</a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.api.routes.html#module-app.api.routes.ask">ask</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="app.crawler.html">app.crawler package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="app.crawler.html#submodules">Submodules</a></li>
-<li class="toctree-l4"><a class="reference internal" href="app.crawler.html#module-app.crawler.base">app.crawler.base module</a><ul>
-<li class="toctree-l5"><a class="reference internal" href="app.crawler.html#app.crawler.base.Crawler"><code class="docutils literal notranslate"><span class="pre">Crawler</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l4"><a class="reference internal" href="app.crawler.html#module-app.crawler.static">app.crawler.static module</a><ul>
-<li class="toctree-l5"><a class="reference internal" href="app.crawler.html#app.crawler.static.StaticCrawler"><code class="docutils literal notranslate"><span class="pre">StaticCrawler</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="app.database.html">app.database package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="app.database.html#submodules">Submodules</a></li>
-<li class="toctree-l4"><a class="reference internal" href="app.database.html#module-app.database.base">app.database.base module</a><ul>
-<li class="toctree-l5"><a class="reference internal" href="app.database.html#app.database.base.Database"><code class="docutils literal notranslate"><span class="pre">Database</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="app.database.html#module-app.database.disk">app.database.disk module</a><ul>
-<li class="toctree-l5"><a class="reference internal" href="app.database.html#app.database.disk.DiskDB"><code class="docutils literal notranslate"><span class="pre">DiskDB</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="app.database.html#module-app.database.factory">app.database.factory module</a><ul>
-<li class="toctree-l5"><a class="reference internal" href="app.database.html#app.database.factory.DatabaseFactory"><code class="docutils literal notranslate"><span class="pre">DatabaseFactory</span></code></a></li>
-<li class="toctree-l5"><a class="reference internal" href="app.database.html#app.database.factory.DatabaseType"><code class="docutils literal notranslate"><span class="pre">DatabaseType</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="app.database.html#module-app.database.in_memory">app.database.in_memory module</a><ul>
-<li class="toctree-l5"><a class="reference internal" href="app.database.html#app.database.in_memory.InMemoryDB"><code class="docutils literal notranslate"><span class="pre">InMemoryDB</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="app.database.html#module-app.database">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="app.crawler.html">Crawler</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="app.crawler.html#module-app.crawler.base">Crawler Interface</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="app.crawler.html#app.crawler.base.Crawler"><code class="docutils literal notranslate"><span class="pre">Crawler</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="app.crawler.html#app.crawler.base.Crawler.extract_content"><code class="docutils literal notranslate"><span class="pre">Crawler.extract_content()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="app.html#module-app">Module contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="app.crawler.html#module-app.crawler.static">Static Crawler</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="app.crawler.html#app.crawler.static.StaticCrawler"><code class="docutils literal notranslate"><span class="pre">StaticCrawler</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="app.crawler.html#app.crawler.static.StaticCrawler.extract_content"><code class="docutils literal notranslate"><span class="pre">StaticCrawler.extract_content()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="config.html">config module</a><ul>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="app.database.html">Database</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="app.database.html#module-app.database.base">Database Interface</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="app.database.html#app.database.base.Database"><code class="docutils literal notranslate"><span class="pre">Database</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="app.database.html#app.database.base.Database.add_embeddings"><code class="docutils literal notranslate"><span class="pre">Database.add_embeddings()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.database.html#app.database.base.Database.add_url"><code class="docutils literal notranslate"><span class="pre">Database.add_url()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.database.html#app.database.base.Database.get_embeddings"><code class="docutils literal notranslate"><span class="pre">Database.get_embeddings()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.database.html#app.database.base.Database.get_url"><code class="docutils literal notranslate"><span class="pre">Database.get_url()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.database.html#app.database.base.Database.list_urls"><code class="docutils literal notranslate"><span class="pre">Database.list_urls()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="app.database.html#module-app.database.in_memory">In Memory Implementation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="app.database.html#app.database.in_memory.InMemoryDB"><code class="docutils literal notranslate"><span class="pre">InMemoryDB</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="app.database.html#app.database.in_memory.InMemoryDB.add_embeddings"><code class="docutils literal notranslate"><span class="pre">InMemoryDB.add_embeddings()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.database.html#app.database.in_memory.InMemoryDB.add_url"><code class="docutils literal notranslate"><span class="pre">InMemoryDB.add_url()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.database.html#app.database.in_memory.InMemoryDB.get_embeddings"><code class="docutils literal notranslate"><span class="pre">InMemoryDB.get_embeddings()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.database.html#app.database.in_memory.InMemoryDB.get_url"><code class="docutils literal notranslate"><span class="pre">InMemoryDB.get_url()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.database.html#app.database.in_memory.InMemoryDB.list_urls"><code class="docutils literal notranslate"><span class="pre">InMemoryDB.list_urls()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="app.database.html#module-app.database.disk">Disk Implementation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="app.database.html#app.database.disk.DiskDB"><code class="docutils literal notranslate"><span class="pre">DiskDB</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="app.database.html#module-app.database.factory">Database Factory</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="app.database.html#app.database.factory.DatabaseFactory"><code class="docutils literal notranslate"><span class="pre">DatabaseFactory</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="app.database.html#app.database.factory.DatabaseFactory.create_database"><code class="docutils literal notranslate"><span class="pre">DatabaseFactory.create_database()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="app.database.html#app.database.factory.DatabaseType"><code class="docutils literal notranslate"><span class="pre">DatabaseType</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="app.database.html#app.database.factory.DatabaseType.DATASTORE"><code class="docutils literal notranslate"><span class="pre">DatabaseType.DATASTORE</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.database.html#app.database.factory.DatabaseType.DISK"><code class="docutils literal notranslate"><span class="pre">DatabaseType.DISK</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="app.database.html#app.database.factory.DatabaseType.IN_MEMORY"><code class="docutils literal notranslate"><span class="pre">DatabaseType.IN_MEMORY</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Config</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="config.html#config.Config"><code class="docutils literal notranslate"><span class="pre">Config</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="config.html#config.Config.APP_PATH"><code class="docutils literal notranslate"><span class="pre">Config.APP_PATH</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="config.html#config.Config.CHUNKS_STACKED"><code class="docutils literal notranslate"><span class="pre">Config.CHUNKS_STACKED</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="config.html#config.Config.CHUNK_INTERSECTION"><code class="docutils literal notranslate"><span class="pre">Config.CHUNK_INTERSECTION</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="config.html#config.Config.INSTRUCTOR_MODEL"><code class="docutils literal notranslate"><span class="pre">Config.INSTRUCTOR_MODEL</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="config.html#config.Config.MAX_TOKENS"><code class="docutils literal notranslate"><span class="pre">Config.MAX_TOKENS</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="config.html#config.Config.MODEL_CTX_SIZE"><code class="docutils literal notranslate"><span class="pre">Config.MODEL_CTX_SIZE</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="config.html#config.Config.MODEL_PATH"><code class="docutils literal notranslate"><span class="pre">Config.MODEL_PATH</span></code></a></li>
@@ -213,7 +241,38 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="run.html">run module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run.html">Flask config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="concepts.html">Concepts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="concepts.crawler.html">Crawler</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="concepts.crawler.html#crawler-depth">Crawler Depth</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="concepts.database.html">Database</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="concepts.database.html#interface">Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="concepts.llm.html">LLAMA 2</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="concepts.llm.html#todo">TODO</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="concepts.context_length.html">Context Length</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="concepts.context_length.html#todo">TODO</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="concepts.embeddings.html">Embeddings</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="concepts.embeddings.html#todo">TODO</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="concepts.nearest_match.html">Approach to handle context length issues</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="concepts.nearest_match.html#intersection">Intersection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="concepts.nearest_match.html#embeddings">Embeddings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="concepts.nearest_match.html#cosine-similarity">Cosine Similarity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="concepts.nearest_match.html#heapq">Heapq</a></li>
+<li class="toctree-l3"><a class="reference internal" href="concepts.nearest_match.html#possible-alternatives">Possible alternatives</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </div>
 </section>
@@ -233,7 +292,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="app.html" class="btn btn-neutral float-right" title="app package" accesskey="n">Next →</a>
+        <a href="app.html" class="btn btn-neutral float-right" title="Talk to a website API" accesskey="n">Next →</a>
       
       
     </div>

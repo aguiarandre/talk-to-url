@@ -9,7 +9,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>config module &mdash; llm  documentation</title>
+  <title>Config &mdash; llm  documentation</title>
   
 
   
@@ -39,8 +39,8 @@
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="llm  documentation" href="index.html"/>
-        <link rel="next" title="run module" href="run.html"/>
-        <link rel="prev" title="app.database package" href="app.database.html"/> 
+        <link rel="next" title="Flask config" href="run.html"/>
+        <link rel="prev" title="Database" href="app.database.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -88,10 +88,13 @@
             
                 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="app.html">app package</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">config module</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="app.html">Talk to a website API</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Config</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#config.Config"><code class="docutils literal notranslate"><span class="pre">Config</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#config.Config.APP_PATH"><code class="docutils literal notranslate"><span class="pre">Config.APP_PATH</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#config.Config.CHUNKS_STACKED"><code class="docutils literal notranslate"><span class="pre">Config.CHUNKS_STACKED</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#config.Config.CHUNK_INTERSECTION"><code class="docutils literal notranslate"><span class="pre">Config.CHUNK_INTERSECTION</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#config.Config.INSTRUCTOR_MODEL"><code class="docutils literal notranslate"><span class="pre">Config.INSTRUCTOR_MODEL</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#config.Config.MAX_TOKENS"><code class="docutils literal notranslate"><span class="pre">Config.MAX_TOKENS</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#config.Config.MODEL_CTX_SIZE"><code class="docutils literal notranslate"><span class="pre">Config.MODEL_CTX_SIZE</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#config.Config.MODEL_PATH"><code class="docutils literal notranslate"><span class="pre">Config.MODEL_PATH</span></code></a></li>
@@ -100,7 +103,8 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="run.html">run module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run.html">Flask config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="concepts.html">Concepts</a></li>
 </ul>
 
             
@@ -142,7 +146,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>config module</li>
+      <li>Config</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -160,19 +164,34 @@
            <div itemprop="articleBody">
             
   <section id="module-config">
-<span id="config-module"></span><h1>config module<a class="headerlink" href="#module-config" title="Permalink to this heading">¶</a></h1>
+<span id="config"></span><h1>Config<a class="headerlink" href="#module-config" title="Permalink to this heading">¶</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="config.Config">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">config.</span></span><span class="sig-name descname"><span class="pre">Config</span></span><a class="reference internal" href="_modules/config.html#Config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#config.Config" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="config.Config.APP_PATH">
+<span class="sig-name descname"><span class="pre">APP_PATH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'/Users/andreaguiar/Desktop/usr/dev/llm/talk-to-url/'</span></em><a class="headerlink" href="#config.Config.APP_PATH" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="config.Config.CHUNKS_STACKED">
+<span class="sig-name descname"><span class="pre">CHUNKS_STACKED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">6</span></em><a class="headerlink" href="#config.Config.CHUNKS_STACKED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="config.Config.CHUNK_INTERSECTION">
 <span class="sig-name descname"><span class="pre">CHUNK_INTERSECTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">20</span></em><a class="headerlink" href="#config.Config.CHUNK_INTERSECTION" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="config.Config.INSTRUCTOR_MODEL">
+<span class="sig-name descname"><span class="pre">INSTRUCTOR_MODEL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'hkunlp/instructor-xl'</span></em><a class="headerlink" href="#config.Config.INSTRUCTOR_MODEL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="config.Config.MAX_TOKENS">
-<span class="sig-name descname"><span class="pre">MAX_TOKENS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2048</span></em><a class="headerlink" href="#config.Config.MAX_TOKENS" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">MAX_TOKENS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">512</span></em><a class="headerlink" href="#config.Config.MAX_TOKENS" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -187,7 +206,7 @@
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="config.Config.N_PROCESSES">
-<span class="sig-name descname"><span class="pre">N_PROCESSES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">8</span></em><a class="headerlink" href="#config.Config.N_PROCESSES" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">N_PROCESSES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#config.Config.N_PROCESSES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -201,10 +220,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="run.html" class="btn btn-neutral float-right" title="run module" accesskey="n">Next →</a>
+        <a href="run.html" class="btn btn-neutral float-right" title="Flask config" accesskey="n">Next →</a>
       
       
-        <a href="app.database.html" class="btn btn-neutral" title="app.database package" accesskey="p">← Previous</a>
+        <a href="app.database.html" class="btn btn-neutral" title="Database" accesskey="p">← Previous</a>
       
     </div>
   

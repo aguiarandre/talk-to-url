@@ -86,9 +86,9 @@
             
                 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../app.html">app package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../config.html">config module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../run.html">run module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../app.html">Talk to a website</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../config.html">Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../run.html">Flask config</a></li>
 </ul>
 
             
@@ -151,17 +151,21 @@
 <span></span><span class="kn">import</span> <span class="nn">multiprocessing</span>
 <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
 <span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">dot</span><span class="p">,</span> <span class="n">linalg</span>
-<span class="kn">from</span> <span class="nn">llama_cpp</span> <span class="kn">import</span> <span class="n">Llama</span>
-<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Blueprint</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">jsonify</span>
-<span class="kn">from</span> <span class="nn">.index_url</span> <span class="kn">import</span> <span class="n">llm</span><span class="p">,</span> <span class="n">db</span>
-
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">heapq</span>
+<span class="kn">from</span> <span class="nn">config</span> <span class="kn">import</span> <span class="n">Config</span><span class="p">,</span> <span class="n">logger</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Blueprint</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">jsonify</span><span class="p">,</span> <span class="n">Response</span><span class="p">,</span> <span class="n">stream_with_context</span>
+<span class="kn">from</span> <span class="nn">.index_url</span> <span class="kn">import</span> <span class="n">llm</span><span class="p">,</span> <span class="n">db</span><span class="p">,</span> <span class="n">model</span>
 
 <span class="n">ask_question_bp</span> <span class="o">=</span> <span class="n">Blueprint</span><span class="p">(</span><span class="s2">&quot;ask&quot;</span><span class="p">,</span> <span class="vm">__name__</span><span class="p">)</span>
+<span class="c1"># logger = logging.getLogger(__name__)</span>
 
 <div class="viewcode-block" id="cosine_similarity"><a class="viewcode-back" href="../../../../app.api.routes.html#app.api.routes.ask.cosine_similarity">[docs]</a><span class="k">def</span> <span class="nf">cosine_similarity</span><span class="p">(</span><span class="n">vec_a</span><span class="p">,</span> <span class="n">vec_b</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Measures the cosine angle between vector A and vector B.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">cos</span> <span class="o">=</span> <span class="n">dot</span><span class="p">(</span><span class="n">vec_a</span><span class="p">,</span> <span class="n">vec_b</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">vec_a</span><span class="p">)</span> <span class="o">*</span> <span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">vec_b</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">cos</span></div>
 
@@ -184,21 +188,7 @@
 <span class="sd">            $ curl -X POST -H &quot;Content-Type: application/json&quot; -d &#39;{&quot;url&quot;: &quot;https://example.com&quot;, &quot;question&quot;:&quot;What is the purpose of this domain?&quot;}&#39; http://localhost:4000/v1/ask</span>
 
 <span class="sd">    Todo:</span>
-<span class="sd">        * ...</span>
-
-<span class="sd">    .. http:post:: /v1/(string:url)</span>
-
-<span class="sd">        **Example request**:</span>
-
-<span class="sd">        .. sourcecode:: http</span>
-
-<span class="sd">            POST /v1/index_url</span>
-<span class="sd">            Content-Type: application/json</span>
-
-<span class="sd">            {</span>
-<span class="sd">                &quot;url&quot;: &quot;https://www.example.com&quot;,</span>
-<span class="sd">                &quot;question&quot;:&quot;what is the purpose of this domain?&quot;</span>
-<span class="sd">            }</span>
+<span class="sd">        * Add response streaming feature</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># collect input</span>
@@ -208,25 +198,62 @@
 
     <span class="c1"># retrieve indexed url</span>
     <span class="n">content</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="n">website_url</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Preparing to compare prompt against </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">embedding_map</span><span class="o">.</span><span class="n">values</span><span class="p">())</span><span class="si">}</span><span class="s1"> chunks...&#39;</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">website_url</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">db</span><span class="o">.</span><span class="n">list_urls</span><span class="p">():</span>
         <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;URL </span><span class="si">{</span><span class="n">website_url</span><span class="si">}</span><span class="s2"> has not been indexed.&quot;</span><span class="p">})</span>
 
-    <span class="n">prompt_embedding</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">create_embedding</span><span class="p">(</span><span class="n">question</span><span class="p">)[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;embedding&#39;</span><span class="p">]</span>
+    <span class="n">instruction</span> <span class="o">=</span> <span class="s2">&quot;Represent the webpage question:&quot;</span>
+    <span class="n">prompt_embedding</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">encode</span><span class="p">([[</span><span class="n">instruction</span><span class="p">,</span><span class="n">question</span><span class="p">]])</span>
 
-    <span class="c1"># calculate embeddings and cosine similarity for each chunk</span>
-    <span class="n">chunked_content</span> <span class="o">=</span> <span class="n">content</span>
-    <span class="n">max_similarity</span> <span class="o">=</span> <span class="o">-</span><span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">text</span><span class="p">,</span> <span class="n">embedding</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">embedding_map</span><span class="o">.</span><span class="n">values</span><span class="p">()):</span>
-        <span class="n">cos</span> <span class="o">=</span> <span class="n">cosine_similarity</span><span class="p">(</span><span class="n">prompt_embedding</span><span class="p">,</span> <span class="n">embedding</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">cos</span> <span class="o">&gt;</span> <span class="n">max_similarity</span><span class="p">:</span>
-            <span class="n">max_similarity</span> <span class="o">=</span> <span class="n">cos</span>
-            <span class="n">chunked_content</span> <span class="o">=</span> <span class="n">text</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Embedding prompt for comparison against chunks&#39;</span><span class="p">)</span>
+    <span class="c1"># use priority queue to grab top Config.CHUNKS_STACKED ordered by cosine similarity</span>
 
-    <span class="n">prompt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Given the following content: &#39;</span><span class="si">{</span><span class="n">chunked_content</span><span class="si">}</span><span class="s2">&#39;, </span><span class="si">{</span><span class="n">question</span><span class="si">}</span><span class="s2">&quot;</span>
-    <span class="n">output</span> <span class="o">=</span> <span class="n">llm</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
+    <span class="n">top_k_chunks</span> <span class="o">=</span> <span class="p">[]</span>
 
-    <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;response&quot;</span><span class="p">:</span> <span class="n">output</span><span class="p">})</span></div>
+    <span class="k">for</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">embedding_map</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+        <span class="n">embed_chunk</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">get_embeddings</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="n">cos</span> <span class="o">=</span> <span class="n">cosine_similarity</span><span class="p">(</span><span class="n">prompt_embedding</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">embed_chunk</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">heapq</span><span class="o">.</span><span class="n">heappush</span><span class="p">(</span><span class="n">top_k_chunks</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="n">cos</span><span class="p">,</span> <span class="n">text</span><span class="p">))</span>
+
+    <span class="n">top_similarities</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">top_k_chunks</span><span class="p">[:</span><span class="n">Config</span><span class="o">.</span><span class="n">CHUNKS_STACKED</span><span class="p">]))</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Best cosine similarities are: </span><span class="si">{</span><span class="n">top_similarities</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">chunked_content</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">while</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="n">Config</span><span class="o">.</span><span class="n">CHUNKS_STACKED</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">top_k_chunks</span><span class="p">):</span>
+        <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span> <span class="o">=</span> <span class="n">heapq</span><span class="o">.</span><span class="n">heappop</span><span class="p">(</span><span class="n">top_k_chunks</span><span class="p">)</span>
+        <span class="n">chunked_content</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Stacked </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s1"> chunks together&#39;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Total number of letters stacked: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">chunked_content</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Total number of tokens stacked: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">llm</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">chunked_content</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)))</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="n">prompt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;Using only information from the following piece text, answer the question.</span>
+<span class="s2">     Don&#39;t make up any information. If you can&#39;t find the answer, simply state &quot;Could not find the answer&quot;.</span>
+<span class="s2">     Only use information from the piece of text.</span>
+<span class="s2">     Context:&#39;</span><span class="si">{</span><span class="n">chunked_content</span><span class="si">}</span><span class="s2">&#39;</span>
+<span class="s2">     Question: </span><span class="si">{</span><span class="n">question</span><span class="si">}</span>
+<span class="s2">     Only return the helpful answer below and nothing else.</span>
+<span class="s2">     Answer:&quot;&quot;&quot;</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Entire prompt used: </span><span class="si">{</span><span class="n">prompt</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">llm</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Q:&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">],</span> <span class="n">echo</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># stream = llm(</span>
+    <span class="c1">#     prompt,</span>
+    <span class="c1">#     max_tokens=48,</span>
+    <span class="c1">#     stop=[&quot;Q:&quot;, &quot;\n&quot;],</span>
+    <span class="c1">#     stream=True,</span>
+    <span class="c1"># )</span>
+    <span class="n">answer</span> <span class="o">=</span> <span class="n">output</span><span class="p">[</span><span class="s1">&#39;choices&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;text&#39;</span><span class="p">]</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Answer: </span><span class="si">{</span><span class="n">answer</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="c1"># return Response(stream_with_context(generate_text_response(stream)), content_type=&#39;text/plain&#39;)</span>
+    <span class="c1"># return jsonify({&quot;response&quot;: stream})</span>
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;response&quot;</span><span class="p">:</span> <span class="n">answer</span><span class="p">})</span></div>
+
+<div class="viewcode-block" id="generate_text_response"><a class="viewcode-back" href="../../../../app.api.routes.html#app.api.routes.ask.generate_text_response">[docs]</a><span class="k">def</span> <span class="nf">generate_text_response</span><span class="p">(</span><span class="n">stream</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">output</span> <span class="ow">in</span> <span class="n">stream</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">output</span><span class="p">[</span><span class="s1">&#39;choices&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;text&#39;</span><span class="p">]</span></div>
 </pre></div>
 
            </div>

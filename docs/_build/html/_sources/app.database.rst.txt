@@ -1,45 +1,35 @@
-app.database package
-====================
+Database
+========
 
-Submodules
-----------
-
-app.database.base module
-------------------------
+Database Interface
+------------------
 
 .. automodule:: app.database.base
    :members:
    :undoc-members:
    :show-inheritance:
 
-app.database.disk module
+
+In Memory Implementation
 ------------------------
-
-.. automodule:: app.database.disk
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-app.database.factory module
----------------------------
-
-.. automodule:: app.database.factory
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-app.database.in\_memory module
-------------------------------
 
 .. automodule:: app.database.in_memory
    :members:
    :undoc-members:
    :show-inheritance:
 
-Module contents
----------------
+Disk Implementation
+-------------------
 
-.. automodule:: app.database
+.. automodule:: app.database.disk
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Database Factory
+----------------
+
+.. automodule:: app.database.factory
    :members:
    :undoc-members:
    :show-inheritance:

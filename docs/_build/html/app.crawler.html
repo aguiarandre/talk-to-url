@@ -9,7 +9,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>app.crawler package &mdash; llm  documentation</title>
+  <title>Crawler &mdash; llm  documentation</title>
   
 
   
@@ -38,7 +38,10 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="llm  documentation" href="index.html"/> 
+    <link rel="top" title="llm  documentation" href="index.html"/>
+        <link rel="up" title="Talk to a website" href="app.html"/>
+        <link rel="next" title="Database" href="app.database.html"/>
+        <link rel="prev" title="Routes" href="app.api.routes.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -85,10 +88,22 @@
             
             
                 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="app.html">app package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="config.html">config module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="run.html">run module</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="app.html">Talk to a website</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="app.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="app.api.html">API Package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Crawler</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#module-app.crawler.base">Crawler Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-app.crawler.static">Static Crawler</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="app.database.html">Database</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run.html">Flask config</a></li>
 </ul>
 
             
@@ -130,7 +145,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>app.crawler package</li>
+          <li><a href="app.html">Talk to a website</a> &raquo;</li>
+        
+      <li>Crawler</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -147,13 +164,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="app-crawler-package">
-<h1>app.crawler package<a class="headerlink" href="#app-crawler-package" title="Permalink to this heading">¶</a></h1>
-<section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">¶</a></h2>
-</section>
+  <section id="crawler">
+<h1>Crawler<a class="headerlink" href="#crawler" title="Permalink to this heading">¶</a></h1>
 <section id="module-app.crawler.base">
-<span id="app-crawler-base-module"></span><h2>app.crawler.base module<a class="headerlink" href="#module-app.crawler.base" title="Permalink to this heading">¶</a></h2>
+<span id="crawler-interface"></span><h2>Crawler Interface<a class="headerlink" href="#module-app.crawler.base" title="Permalink to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="app.crawler.base.Crawler">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.crawler.base.</span></span><span class="sig-name descname"><span class="pre">Crawler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">website_url</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/crawler/base.html#Crawler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.crawler.base.Crawler" title="Permalink to this definition">¶</a></dt>
@@ -168,7 +182,7 @@
 
 </section>
 <section id="module-app.crawler.static">
-<span id="app-crawler-static-module"></span><h2>app.crawler.static module<a class="headerlink" href="#module-app.crawler.static" title="Permalink to this heading">¶</a></h2>
+<span id="static-crawler"></span><h2>Static Crawler<a class="headerlink" href="#module-app.crawler.static" title="Permalink to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="app.crawler.static.StaticCrawler">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.crawler.static.</span></span><span class="sig-name descname"><span class="pre">StaticCrawler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">website_url</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/crawler/static.html#StaticCrawler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.crawler.static.StaticCrawler" title="Permalink to this definition">¶</a></dt>
@@ -190,6 +204,15 @@ requests and BeautifulSoup.</p>
            </div>
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="app.database.html" class="btn btn-neutral float-right" title="Database" accesskey="n">Next →</a>
+      
+      
+        <a href="app.api.routes.html" class="btn btn-neutral" title="Routes" accesskey="p">← Previous</a>
+      
+    </div>
   
 
   <hr/>
