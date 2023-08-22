@@ -8,8 +8,8 @@ Subpackages
    :maxdepth: 4
 
    app.api
+   app.crawler
    app.database
-   app.utils
 
 Module contents
 ---------------

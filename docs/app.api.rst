@@ -8,3 +8,11 @@ Module contents
    :members:
    :undoc-members:
    :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   app.api.routes

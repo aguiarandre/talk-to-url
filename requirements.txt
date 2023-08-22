@@ -6,3 +6,5 @@ openai==0.27.8
 pip-chill==1.0.3
 python-dotenv==0.21.1
 rtcat-sphinx-theme==0.1.1
+google-cloud-datastore==2.17.0
+numpy==1.25.2

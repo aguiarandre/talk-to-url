@@ -1,0 +1,21 @@
+app.api.crawler package
+=======================
+
+Submodules
+----------
+
+app.api.crawler.base module
+---------------------------
+
+.. automodule:: app.api.crawler.base
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+app.api.crawler.static module
+-----------------------------
+
+.. automodule:: app.api.crawler.static
+   :members:
+   :undoc-members:
+   :show-inheritance:

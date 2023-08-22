@@ -1,49 +1,79 @@
-from flask import Blueprint, request, jsonify
-import openai
-from dotenv import load_dotenv
-import os
-from .index_url import db
+import multiprocessing
+from tqdm import tqdm
+from numpy import dot, linalg
 from llama_cpp import Llama
+from flask import Blueprint, request, jsonify
+from .index_url import llm, db
 
-LLM = Llama(
-    model_path="D:/Users/andreaguiar/llm/llama-2-7b-chat.ggmlv3.q2_K.bin", n_ctx=4096
-)
-
-load_dotenv()
-
-# openai.api_key = os.environ.get("OPENAI_API_KEY")
 
 ask_question_bp = Blueprint("ask", __name__)
+
+def cosine_similarity(vec_a, vec_b):
+    """
+    Measures the cosine angle between vector A and vector B.
+    """
+    cos = dot(vec_a, vec_b) / (linalg.norm(vec_a) * linalg.norm(vec_b))
+    return cos
+
 
 
 @ask_question_bp.route("/ask", methods=["POST"])
 def ask_question():
     """
-    Docstring goes here
+    This endpoint expects an input body in the form {"url":"https://www.example.com/", "question":"what is your name?"}
+
+
+    :type question: string
+    Args:
+        url (str): The website URL for which you want to interact with.
+        question (str): The question you want the LLM to answer based on the URL.
+
+    Example:
+        One can send a POST request to where this is hosted as::
+
+            $ curl -X POST -H "Content-Type: application/json" -d '{"url": "https://example.com", "question":"What is the purpose of this domain?"}' http://localhost:4000/v1/ask
+
+    Todo:
+        * ...
+
+    .. http:post:: /v1/(string:url)
+
+        **Example request**:
+
+        .. sourcecode:: http
+
+            POST /v1/index_url
+            Content-Type: application/json
+
+            {
+                "url": "https://www.example.com",
+                "question":"what is the purpose of this domain?"
+            }
+
     """
+    # collect input
     data = request.json
     website_url = data.get("url")
     question = data.get("question")
 
+    # retrieve indexed url
     content = db.get_url(website_url)
 
     if website_url not in db.list_urls():
         return jsonify({"error": f"URL {website_url} has not been indexed."})
 
-    prompt = f"Given the following content: '{content}', {question}"
+    prompt_embedding = llm.create_embedding(question)['data'][0]['embedding']
 
-    conversation = [
-        {"role": "system", "content": "You are a helpful assistant."},
-        {"role": "user", "content": f"{prompt}"},
-    ]
-    output = LLM(prompt)
+    # calculate embeddings and cosine similarity for each chunk
+    chunked_content = content
+    max_similarity = -float('inf')
+    for text, embedding in tqdm(db.embedding_map.values()):
+        cos = cosine_similarity(prompt_embedding, embedding)
+        if cos > max_similarity:
+            max_similarity = cos
+            chunked_content = text
 
-    # display the response
-    print(output["choices"][0]["text"])
-    # response = openai.ChatCompletion.create(
-    #     model="gpt-3.5-turbo", messages=conversation
-    # )
+    prompt = f"Given the following content: '{chunked_content}', {question}"
+    output = llm(prompt)
 
-    # reply = response.choices[0].message["content"]
-
-    return jsonify({"response": output["choices"][0]["text"]})
+    return jsonify({"response": output})

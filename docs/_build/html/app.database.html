@@ -40,8 +40,8 @@
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="llm  documentation" href="index.html"/>
         <link rel="up" title="app package" href="app.html"/>
-        <link rel="next" title="app.utils package" href="app.utils.html"/>
-        <link rel="prev" title="app.api package" href="app.api.html"/> 
+        <link rel="next" title="config module" href="config.html"/>
+        <link rel="prev" title="app.api.routes package" href="app.api.routes.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -101,7 +101,6 @@
 <li class="toctree-l4"><a class="reference internal" href="#module-app.database">Module contents</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="app.utils.html">app.utils package</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="app.html#module-app">Module contents</a></li>
@@ -181,20 +180,34 @@
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.database.base.</span></span><span class="sig-name descname"><span class="pre">Database</span></span><a class="reference internal" href="_modules/app/database/base.html#Database"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.database.base.Database" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
 <dl class="py method">
+<dt class="sig sig-object py" id="app.database.base.Database.add_embeddings">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">add_embeddings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embedding</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/database/base.html#Database.add_embeddings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.database.base.Database.add_embeddings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add text along with its associated embedding vectors</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="app.database.base.Database.add_url">
 <em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">add_url</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/database/base.html#Database.add_url"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.database.base.Database.add_url" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add URL</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="app.database.base.Database.get_embeddings">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_embeddings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/database/base.html#Database.get_embeddings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.database.base.Database.get_embeddings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve the embedding for a given text</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="app.database.base.Database.get_url">
 <em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_url</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/database/base.html#Database.get_url"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.database.base.Database.get_url" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Given the URL, return its content</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="app.database.base.Database.list_urls">
 <em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">list_urls</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/database/base.html#Database.list_urls"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.database.base.Database.list_urls" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Return a list the indexed URLs</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -227,6 +240,11 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
 <p>An enumeration.</p>
 <dl class="py attribute">
+<dt class="sig sig-object py" id="app.database.factory.DatabaseType.DATASTORE">
+<span class="sig-name descname"><span class="pre">DATASTORE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'google_datastore'</span></em><a class="headerlink" href="#app.database.factory.DatabaseType.DATASTORE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="app.database.factory.DatabaseType.DISK">
 <span class="sig-name descname"><span class="pre">DISK</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'disk'</span></em><a class="headerlink" href="#app.database.factory.DatabaseType.DISK" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -245,6 +263,13 @@
 <dt class="sig sig-object py" id="app.database.in_memory.InMemoryDB">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.database.in_memory.</span></span><span class="sig-name descname"><span class="pre">InMemoryDB</span></span><a class="reference internal" href="_modules/app/database/in_memory.html#InMemoryDB"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.database.in_memory.InMemoryDB" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#app.database.base.Database" title="app.database.base.Database"><code class="xref py py-class docutils literal notranslate"><span class="pre">Database</span></code></a></p>
+<p>InMemoryDB is a simple implementation of a dictionary</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="app.database.in_memory.InMemoryDB.add_embeddings">
+<span class="sig-name descname"><span class="pre">add_embeddings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embedding</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/database/in_memory.html#InMemoryDB.add_embeddings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.database.in_memory.InMemoryDB.add_embeddings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add text along with its associated embedding vectors</p>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="app.database.in_memory.InMemoryDB.add_url">
 <span class="sig-name descname"><span class="pre">add_url</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/database/in_memory.html#InMemoryDB.add_url"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.database.in_memory.InMemoryDB.add_url" title="Permalink to this definition">¶</a></dt>
@@ -252,14 +277,22 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="app.database.in_memory.InMemoryDB.get_embeddings">
+<span class="sig-name descname"><span class="pre">get_embeddings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/database/in_memory.html#InMemoryDB.get_embeddings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.database.in_memory.InMemoryDB.get_embeddings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve the embedding for a given text</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="app.database.in_memory.InMemoryDB.get_url">
 <span class="sig-name descname"><span class="pre">get_url</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/database/in_memory.html#InMemoryDB.get_url"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.database.in_memory.InMemoryDB.get_url" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Given the URL, return its content</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="app.database.in_memory.InMemoryDB.list_urls">
 <span class="sig-name descname"><span class="pre">list_urls</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/database/in_memory.html#InMemoryDB.list_urls"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.database.in_memory.InMemoryDB.list_urls" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Return a list the indexed URLs</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -276,10 +309,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="app.utils.html" class="btn btn-neutral float-right" title="app.utils package" accesskey="n">Next →</a>
+        <a href="config.html" class="btn btn-neutral float-right" title="config module" accesskey="n">Next →</a>
       
       
-        <a href="app.api.html" class="btn btn-neutral" title="app.api package" accesskey="p">← Previous</a>
+        <a href="app.api.routes.html" class="btn btn-neutral" title="app.api.routes package" accesskey="p">← Previous</a>
       
     </div>
   

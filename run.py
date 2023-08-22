@@ -9,6 +9,8 @@ if __name__ == "__main__":
     app.register_blueprint(ask_question_bp, url_prefix="/v1")
     app.run(host="0.0.0.0", port=4000)
 
+
 # docker run -p 4000:80 --mount type=bind,source="$(pwd)"/app,target=/llm findly-api
-# curl -X POST -H "Content-Type: application/json" -d '{"url": "https://example.com"}' http://localhost:4000/index_url
+# curl -X POST -H "Content-Type: application/json" -d '{"url": "https://example.com"}' http://localhost:4000/v1/index_url
+# curl -X POST -H "Content-Type: application/json" -d '{"url": "https://example.com", "question":"What is the purpose of this domain?"}' http://localhost:4000/v1/ask
 # docker exec -it findly //bin//sh

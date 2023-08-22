@@ -91,8 +91,8 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">app package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="app.api.html">app.api package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="app.crawler.html">app.crawler package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="app.database.html">app.database package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="app.utils.html">app.utils package</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#module-app">Module contents</a></li>
@@ -166,13 +166,42 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="app.api.html">app.api package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="app.api.html#module-app.api">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="app.api.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="app.api.routes.html">app.api.routes package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="app.api.routes.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="app.api.routes.html#module-app.api.routes.index_url">app.api.routes.index_url module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="app.api.routes.html#module-app.api.routes.ask">app.api.routes.ask module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="app.crawler.html">app.crawler package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="app.crawler.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="app.crawler.html#module-app.crawler.base">app.crawler.base module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="app.crawler.html#app.crawler.base.Crawler"><code class="docutils literal notranslate"><span class="pre">Crawler</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="app.crawler.html#app.crawler.base.Crawler.extract_content"><code class="docutils literal notranslate"><span class="pre">Crawler.extract_content()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="app.crawler.html#module-app.crawler.static">app.crawler.static module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="app.crawler.html#app.crawler.static.StaticCrawler"><code class="docutils literal notranslate"><span class="pre">StaticCrawler</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="app.crawler.html#app.crawler.static.StaticCrawler.extract_content"><code class="docutils literal notranslate"><span class="pre">StaticCrawler.extract_content()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="app.database.html">app.database package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="app.database.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="app.database.html#module-app.database.base">app.database.base module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="app.database.html#app.database.base.Database"><code class="docutils literal notranslate"><span class="pre">Database</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="app.database.html#app.database.base.Database.add_embeddings"><code class="docutils literal notranslate"><span class="pre">Database.add_embeddings()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="app.database.html#app.database.base.Database.add_url"><code class="docutils literal notranslate"><span class="pre">Database.add_url()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="app.database.html#app.database.base.Database.get_embeddings"><code class="docutils literal notranslate"><span class="pre">Database.get_embeddings()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="app.database.html#app.database.base.Database.get_url"><code class="docutils literal notranslate"><span class="pre">Database.get_url()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="app.database.html#app.database.base.Database.list_urls"><code class="docutils literal notranslate"><span class="pre">Database.list_urls()</span></code></a></li>
 </ul>
@@ -189,6 +218,7 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="app.database.html#app.database.factory.DatabaseType"><code class="docutils literal notranslate"><span class="pre">DatabaseType</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="app.database.html#app.database.factory.DatabaseType.DATASTORE"><code class="docutils literal notranslate"><span class="pre">DatabaseType.DATASTORE</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="app.database.html#app.database.factory.DatabaseType.DISK"><code class="docutils literal notranslate"><span class="pre">DatabaseType.DISK</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="app.database.html#app.database.factory.DatabaseType.IN_MEMORY"><code class="docutils literal notranslate"><span class="pre">DatabaseType.IN_MEMORY</span></code></a></li>
 </ul>
@@ -197,7 +227,9 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="app.database.html#module-app.database.in_memory">app.database.in_memory module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="app.database.html#app.database.in_memory.InMemoryDB"><code class="docutils literal notranslate"><span class="pre">InMemoryDB</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="app.database.html#app.database.in_memory.InMemoryDB.add_embeddings"><code class="docutils literal notranslate"><span class="pre">InMemoryDB.add_embeddings()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="app.database.html#app.database.in_memory.InMemoryDB.add_url"><code class="docutils literal notranslate"><span class="pre">InMemoryDB.add_url()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="app.database.html#app.database.in_memory.InMemoryDB.get_embeddings"><code class="docutils literal notranslate"><span class="pre">InMemoryDB.get_embeddings()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="app.database.html#app.database.in_memory.InMemoryDB.get_url"><code class="docutils literal notranslate"><span class="pre">InMemoryDB.get_url()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="app.database.html#app.database.in_memory.InMemoryDB.list_urls"><code class="docutils literal notranslate"><span class="pre">InMemoryDB.list_urls()</span></code></a></li>
 </ul>
@@ -205,18 +237,6 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="app.database.html#module-app.database">Module contents</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="app.utils.html">app.utils package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="app.utils.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="app.utils.html#module-app.utils.content_extraction">app.utils.content_extraction module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="app.utils.html#app.utils.content_extraction.WebsiteCrawler"><code class="docutils literal notranslate"><span class="pre">WebsiteCrawler</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="app.utils.html#app.utils.content_extraction.WebsiteCrawler.extract_content"><code class="docutils literal notranslate"><span class="pre">WebsiteCrawler.extract_content()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="app.utils.html#module-app.utils">Module contents</a></li>
 </ul>
 </li>
 </ul>
