@@ -76,10 +76,11 @@ b' em 2022". Valor. 20 May 2021. Archived from the original on 5 August 2021. Re
 
 
 # Known Issues and TODOs: 
--[ ] llm, embedding instructor, db are being initialised more than necessary;
--[ ] multiprocessing may bring overhead, maybe for now best strategy would be to remove it;
--[ ] number of chunks to stack is a config and could be misused - create automatic chunk size or simply cap at max_tokens for chunks sorted by semantic similarity.
--[ ] streaming version of /ask does not work - create a separate endpoint for that
--[ ] expand crawler to go into websites' links and use that info (maybe in a bfs manner up to some configured depth)
--[ ] finish docker implementation (include llm model path)
--[ ] create vectorizer class instead of directly using the instructor
+
+- [ ] llm, embedding instructor, db are being initialised more than necessary;
+- [ ] multiprocessing may bring overhead, maybe for now best strategy would be to remove it;
+- [ ] number of chunks to stack is a config and could be misused - create automatic chunk size or simply cap at max_tokens for chunks sorted by semantic similarity.
+- [ ] streaming version of /ask does not work - create a separate endpoint for that
+- [ ] expand crawler to go into websites' links and use that info (maybe in a bfs manner up to some configured depth)
+- [ ] finish docker implementation (include llm model path)
+- [ ] create vectorizer class instead of directly using the instructor
