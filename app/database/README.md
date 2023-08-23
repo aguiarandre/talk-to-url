@@ -1,0 +1,2 @@
+Currently implemented methods: 
+- InMemoryDB
